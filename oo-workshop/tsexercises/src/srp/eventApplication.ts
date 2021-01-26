@@ -9,13 +9,7 @@ export class EventApplication{
     }
 
     public scheduleEvent(eventName: string, eventDate: string, eventCost: string, eventLocation: string): boolean{
-        const validEvent: boolean = this.validEventName(eventName) && 
-                                    this.validEventDate(eventDate) && 
-                                    this.validEventLocation(eventLocation) && 
-                                    this.validateEventCost(eventCost)
-        if(!validEvent) {
-            return false
-        }
+    
         const newEvent = new Event(eventName, eventDate, eventCost, eventLocation)
         const existingEvents: Event[] = this.eventRepo.getAllEvents()
         if(this.existingEventsContainsNewEvent(existingEvents, newEvent)){
@@ -28,13 +22,7 @@ export class EventApplication{
     }
 
     public updateNamedEvent(eventName: string, eventDate: string, eventCost: string, eventLocation: string): boolean{
-        const validEvent: boolean = this.validEventName(eventName) && 
-                                    this.validEventDate(eventDate) && 
-                                    this.validEventLocation(eventLocation) && 
-                                    this.validateEventCost(eventCost)
-        if(!validEvent) {
-            return false
-        }
+       
         const newEvent = new Event(eventName, eventDate, eventCost, eventLocation)
         const existingEvents: Event[] = this.eventRepo.getAllEvents()
         
@@ -75,21 +63,4 @@ export class EventApplication{
         return true
     }
 
-    private validEventName(eventName: string): boolean{
-        return eventName.length > 10 // A nice long name makes an event seem important
-    }
-    private validEventDate(eventDate: string): boolean{
-        return eventDate.length === 7 // MM/YYYY
-    }
-    private validEventLocation(eventLocation: string): boolean{
-        return eventLocation.startsWith("online") //it's a pandemic, no in person events
-    }
-    private validateEventCost(eventCost: string): boolean{
-        try{
-            parseInt(eventCost)
-            return true
-        } catch(error: any){
-            return false
-        }
-    }
 }
