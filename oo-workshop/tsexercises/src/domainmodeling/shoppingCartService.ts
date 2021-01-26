@@ -13,7 +13,7 @@ export class ShoppingCartService{
     public addItemToShoppingCart(shoppingCartId: string, item: Product): ShoppingCart {
         const shoppingCart: ShoppingCart = this.repository.find(shoppingCartId)
 
-        shoppingCart.items.push(item)
+        shoppingCart.addItem(item)
 
         this.repository.save(shoppingCart)
 
@@ -22,16 +22,7 @@ export class ShoppingCartService{
 
     public removeItemFromShoppingCart(shoppingCartId: string, itemId: string): ShoppingCart{
         const shoppingCart: ShoppingCart = this.repository.find(shoppingCartId)
-
-        let deletionIndex: number = -1
-        shoppingCart.items.forEach((item: Product, itemIndex) => {
-            if(item.id === itemId){
-                deletionIndex = itemIndex
-            }
-        })
-
-        //the arbitrary looking '1' is saying how many items to remove starting at the deletion index
-        shoppingCart.items.splice(deletionIndex, 1)
+        shoppingCart.removeItem(itemId)
    
         return this.repository.save(shoppingCart)
 
@@ -40,17 +31,12 @@ export class ShoppingCartService{
     public calculateShoppingCartTotal(shoppingCartId: string): number {
         const shoppingCart: ShoppingCart = this.repository.find(shoppingCartId)
 
-        let total: number = 0
-        shoppingCart.items.forEach((item: Product) => {
-            total = total + item.price
-        })
-    
-        return total
+        return shoppingCart.calculateTotal()
     }
 
     public getItemsInCart(shoppingCartId: string): Product[] {
         const shoppingCart: ShoppingCart = this.repository.find(shoppingCartId)
 
-        return shoppingCart.items
+        return shoppingCart.getItems()
     }
 }
