@@ -1,11 +1,23 @@
-export class PaymentMethod {
+// export abstract class PaymentMethod {
+
+//     constructor() {}
+
+//     validatePayment() {}
+
+// }
+
+export interface PaymentMethod {
+
+    validatePayment(): string;
+}
+
+export class CardPaymentMethod implements PaymentMethod {
     public validCardNumber: boolean | undefined
 
-    public constructor(){}
-
-    public validateCardPayment(validCardNumber: boolean): string{
+    public validatePayment(): string{
         let message: string
-        if(validCardNumber){
+
+        if(this.validCardNumber){
             message = "Payment Validated"
         }
         else{

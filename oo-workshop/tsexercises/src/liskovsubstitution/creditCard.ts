@@ -1,5 +1,5 @@
-import { PaymentMethod } from "./paymentMethod"
+import { CardPaymentMethod } from "./paymentMethod"
 
-export class CreditCard extends PaymentMethod{
+export class CreditCard extends CardPaymentMethod{
     //Credit card specific logic
 }
